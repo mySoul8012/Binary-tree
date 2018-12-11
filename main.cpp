@@ -12,6 +12,7 @@ int main() {
     std::cout << string << std::endl;
     auto tree = new Tree<std::string>(string);
     cout << tree->getDepth() << endl;
+
     cout << tree ->getBitNodeTop()->getData() << endl;
     cout << tree ->getCreateString() << endl;
     cout << 333 << endl;
