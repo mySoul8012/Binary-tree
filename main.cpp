@@ -1,41 +1,31 @@
-
 #include <iostream>
-#include "src/Tree.h"
-using namespace std;
+#include <cstdlib>
+#include <pthread.h>
+#include <mutex>
+#include <vector>
+#include "src/model/tree/Tree.h"
 
+
+std::vector<std::string> vec;
+std::mutex g_mutex;
+void* runFunction(void *e) {
+    std::string string = "A(B(D(H,I),E(J,)),C(F,G))";
+    auto tree = new Tree<std::string>(string);
+    tree ->DispBiTNode();
+    g_mutex.lock();
+    vec.push_back(tree->resuful);
+    g_mutex.unlock();
+    pthread_exit(NULL);
+}
 
 int main() {
-    auto bitNode = new BitNode<std::string>("4") ;
-    std::cout << bitNode->getData() << std::endl;
-
-    std::string string = "A(B(D(H,I),E(J,)),C(F,G))";
-    std::cout << string << std::endl;
-    auto tree = new Tree<std::string>(string);
-    cout << tree->getDepth() << endl;
-
-    cout << tree ->getBitNodeTop()->getData() << endl;
-    cout << tree ->getCreateString() << endl;
-    cout << 333 << endl;
-    tree ->DispBiTNode();
-
-    cout << tree ->resuful<< endl;
-    cout << 1111 << endl;
-    tree->resuful = "";
-    tree->PreOrderTraverse();
-    cout << tree->resuful << endl;
-    //cout << tree ->PreOrderTraverse() << endl;
-    cout << 2222 << endl;
-    tree->resuful = "";
-    tree ->InOrderTraverse() ;
-    cout << tree->resuful << endl;
-    tree->resuful = "";
-    tree ->PostOrderTraverse();
-    cout << tree->resuful << endl;
-//    cout << tree  ->PostOrderTraverse() << endl;
-//    bitnode.setData("3");
-   // bitnode = new BitNode<std::string>();
-    //cout << bitnode.getData() << endl;
- //   Tree<int>* tree;
- //   cout <<  tree->getBitNodeTop()->getData() << endl;
-    return 0;
+    pthread_t tids[200];
+    for(int i = 0; i < 200; ++i)
+    {
+        int ret = pthread_create(&tids[i], NULL, runFunction, NULL);
+    }
+    for(int i = 0; i < vec.size() ; i++){
+        std::cout << vec[i] << std::endl;
+    }
+    pthread_exit(NULL);
 }
