@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <mutex>
 #include <vector>
+#include <zconf.h>
 #include "src/model/tree/Tree.h"
 
 
