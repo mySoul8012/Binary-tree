@@ -23,7 +23,7 @@ public:
         std::vector<BitNode<char>*> b;
         // 和vec建立关系
         for(int i = 0; i < vec.size(); i++){
-            b[i] = new BitNode<char>(vec[i]);
+            b.push_back(new BitNode<char>(vec[i]));
            b[i]->setLchild(nullptr);
            b[i]->setRchild(nullptr);
         }
@@ -66,8 +66,8 @@ public:
             }
             // 开始建立新树，其中k1为第一小，k2为第二小
             auto* tmp = new BitNode<char>(b[k1]->getData() + b[k2]->getData());
-            tmp->setRchild(nullptr);
-            tmp->setLchild(nullptr);
+            tmp->setRchild(b[0]);
+            tmp->setLchild(b[1]);
 
             // 对于容器内进行清空操作
             b[k1] = tmp;

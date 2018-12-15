@@ -45,5 +45,5 @@ int main() {
     vecH.push_back(16);
     auto Huffman = new HuffmanCoding<char>(vecH);
     vec.push_back(Huffman->top->getData());
-    std::cout << Huffman->top->getData()<< std::endl;
+    std::cout << (int)Huffman->top->getData() << std::endl;
 }
