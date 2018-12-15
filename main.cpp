@@ -12,7 +12,7 @@ std::mutex g_mutex;
 void* runFunction(void *e) {
     std::string string = "A(B(D(H,I),E(J,)),C(F,G))";
     auto tree = new Tree<std::string>(string);
-    tree ->DispBiTNode();
+    tree->LeveLOrder();
     g_mutex.lock();
     vec.push_back(tree->resuful);
     g_mutex.unlock();

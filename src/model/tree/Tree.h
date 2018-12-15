@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <semaphore.h>
 #include <exception>
+#include <queue>    // 队列
 
 #define UNTITLED4_TREE_H
 
@@ -47,6 +48,8 @@ public:
     void InOrderTraverse();
     // 后序遍历二叉树
     void PostOrderTraverse();
+    // 层次遍历二叉树
+    void LeveLOrder();
     // get和set方法
     int getDepth(){
         return this->depth;
@@ -352,6 +355,30 @@ void Tree<T>::recursionBeforer(BitNode<char> *tree) {
         this->recursionBeforer(tree ->getRchild());
         this->resuful += tree->getData();
     }
+}
+
+// 层次遍历二叉树
+template<class T>
+void Tree<T>::LeveLOrder() {
+    // 定义队列
+    std::queue<BitNode<char>*> queue;
+    // 跟节点入队
+    queue.push(this->bitNodeTop);
+    // 进行循环
+    while(!queue.empty()){    // 当队列为非空，进行循环，遍历操作
+        // 输出结果
+        this->resuful += queue.front()->getData();
+        // 左右节点非空入栈
+        if (queue.front()->getLchild()){
+            queue.push(queue.front()->getLchild());
+        }
+        if (queue.front()->getRchild()){
+            queue.push(queue.front()->getRchild());
+        }
+        // 头元素出栈
+        queue.pop();
+    }
+
 }
 
 /*
