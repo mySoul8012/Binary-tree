@@ -26,7 +26,7 @@ private:
     // 树的深度
     int depth = 0;
     // 树的头节点
-    BitNode<char>* bitNodeTop = NULL;
+    BitNode<char>* bitNodeTop = nullptr;
     // 创建树时输入值
     std::string createString = "";
     void recursion(BitNode<char>* tree); // 输出方法
@@ -34,7 +34,14 @@ private:
     void recursionCenter(BitNode<char>* tree);
     void recursionAfter(BitNode<char>* tree);
     void recursionBeforer(BitNode<char>* tree);
+    BitNode<char>* Find(BitNode<char>* tree, char x);
+    int get(BitNode<char>* tree);
+    int count(BitNode<char>* tree);
 public:
+    // 获取树中叶子节点数量
+    int CountLeaf();
+    // 获取二叉树深度
+    int GetTreeDepth();
     // 结果
     std::string resuful = "";
     // 构造
@@ -50,6 +57,8 @@ public:
     void PostOrderTraverse();
     // 层次遍历二叉树
     void LeveLOrder();
+    // 查找二叉树中指定的节点
+    BitNode<char>* findNode(char x);
     // get和set方法
     int getDepth(){
         return this->depth;
@@ -61,7 +70,7 @@ public:
         return this->bitNodeTop;
     }
     void setBitNodeTop(BitNode<T>* _bitNodeTop){
-        this->bitNodeTop = **_bitNodeTop;
+        this->bitNodeTop = _bitNodeTop;
     };
     std::string getCreateString(){
         return this->createString;
@@ -78,7 +87,7 @@ Tree<T>::Tree() {
     // 深度
     this->setDepth(1);
     // 头节点
-    BitNode<char>* bitNode = new BitNode<char>('A');
+    auto* bitNode = new BitNode<char>('A');
     this->bitNodeTop = bitNode;
     // 创建树的输入
     std::string tmpString = "A(,)";
@@ -103,7 +112,7 @@ Tree<T>::Tree(std::string& _str) {
     int sem = 0;
 
     // 对头节点处理
-    BitNode<char>* tmpBitNode = new BitNode<char>(_str[0]);
+    auto* tmpBitNode = new BitNode<char>(_str[0]);
     nodeStack.push(tmpBitNode);
     this->bitNodeTop = tmpBitNode;
     // 深度
@@ -287,7 +296,7 @@ void Tree<T>::InOrderTraverse() {
 // 先序递归
 template<class T>
 void Tree<T>::recursionBefore(BitNode<char> *tree) {
-    if (tree != NULL)
+    if (tree != nullptr)
     {
         this->resuful += tree->getData();
             this->recursionBefore(tree->getLchild());
@@ -300,10 +309,10 @@ void Tree<T>::recursionBefore(BitNode<char> *tree) {
 // 输出递归函数
 template<class T>
 void Tree<T>::recursion(BitNode<char>* tree){
-    if (tree != NULL)
+    if (tree != nullptr)
     {
         this->resuful += tree->getData();
-        if (tree->getLchild() != NULL || tree->getRchild() != NULL)
+        if (tree->getLchild() != nullptr || tree->getRchild() != nullptr)
         {
             this->resuful += "(";
             this->recursion(tree->getLchild());
@@ -317,7 +326,7 @@ void Tree<T>::recursion(BitNode<char>* tree){
 // 中序
 template<class T>
 void Tree<T>::recursionCenter(BitNode<char>* tree){
-    if (tree != NULL)
+    if (tree != nullptr)
     {
             this->recursionCenter(tree->getLchild());
             this->resuful += tree->getData();
@@ -328,10 +337,10 @@ void Tree<T>::recursionCenter(BitNode<char>* tree){
 template<class T>
 void Tree<T>::recursionAfter(BitNode<char> *tree) {
     this->resuful += "\n";
-    if (tree != NULL)
+    if (tree != nullptr)
     {
         this->resuful += tree->getData();
-        if (tree->getLchild() != NULL || tree->getRchild() != NULL)
+        if (tree->getLchild() != nullptr || tree->getRchild() != nullptr)
         {
             this->resuful += "(";
             this->recursion(tree->getLchild());
@@ -349,7 +358,7 @@ void Tree<T>::PostOrderTraverse() {
 
 template<class T>
 void Tree<T>::recursionBeforer(BitNode<char> *tree) {
-    if (tree != NULL)
+    if (tree != nullptr)
     {
         this->recursionBeforer(tree->getLchild());
         this->recursionBeforer(tree ->getRchild());
@@ -381,6 +390,70 @@ void Tree<T>::LeveLOrder() {
 
 }
 
+
+// 查找二叉树中的某个节点
+template<class T>
+BitNode<char> *Tree<T>::findNode(char x) {
+    return Find(this->bitNodeTop, x);
+}
+
+template<class T>
+BitNode<char> *Tree<T>::Find(BitNode<char> *tree, char x) {
+    BitNode<char>*p = nullptr;
+    if(tree != nullptr){
+        if(tree->getData() == x){
+            return tree;
+        }
+
+        // 下一个节点
+        p = Find(tree->getLchild(), x);
+        if(p != nullptr){
+            return p;
+        }
+
+        // 寻找右节点
+        p = Find(tree->getRchild(),x);
+        if(p != nullptr) {
+            return p;
+        }
+    }
+    // 全部为找到
+    return nullptr;
+}
+
+// 获取节点深度
+template<class T>
+int Tree<T>::GetTreeDepth() {
+    return get(this->bitNodeTop);
+}
+
+template<class T>
+int Tree<T>::get(BitNode<char> *tree) {
+    int left, right;
+    if(tree != nullptr){
+        return 0;
+    }
+
+    left = get(tree->getLchild())+1;    // 当前遍历到的节点数目+1
+    right = get(tree->getRchild())+1;
+    if(left > right){
+        return left;
+    }
+    return right;
+}
+
+template<class T>
+int Tree<T>::count(BitNode<char> *tree) {
+    if(tree->getRchild() == nullptr && tree->getLchild() == nullptr){
+        return 1;
+    }
+    return count(tree->getLchild()) + count(tree->getRchild());
+}
+
+template<class T>
+int Tree<T>::CountLeaf() {
+    return count(bitNodeTop);
+};
 /*
 template<class T>
 std::string Tree<T>::recursionBefore(BitNode<char>* tree){
@@ -397,5 +470,4 @@ std::string Tree<T>::recursionBefore(BitNode<char>* tree){
 }
  */
 //
-
 #endif //UNTITLED4_TREE_H

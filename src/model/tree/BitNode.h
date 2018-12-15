@@ -10,10 +10,11 @@
 template<class T>
 class BitNode {
 private:
-    T data;
+
     BitNode<T>* lchild;    // 指向左节点
     BitNode<T>* rchild;    // 指向右节点
 public:
+    T data;
     BitNode();
     BitNode(T _data);
 
@@ -75,6 +76,6 @@ void BitNode<T>::setRchild(BitNode *_rchild) {
 template<class T>
 BitNode<T> *BitNode<T>::getRchild() {
     return this->rchild;
-}
+};
 
 #endif //UNTITLED4_BITNODE_H

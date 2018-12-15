@@ -13,7 +13,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/model/HuffmanCoding/HuffmanCoding.h">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/model/tree/BitNode.h">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/model/tree/Tree.cpp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/model/tree/Tree.h">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/public/public.h">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/test.cpp">
           <value>
             <set />
           </value>
