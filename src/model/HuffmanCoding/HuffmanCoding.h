@@ -13,19 +13,33 @@
 // 哈夫曼编码
 template <class T>
 class HuffmanCoding{
-public:
+private:
     std::vector<char> vec;
     BitNode<char>* top;
+    void printString(BitNode<T>* bitNode);
 public:
-    HuffmanCoding(std::vector<char> _vec){
+    std::string result;
+    HuffmanCoding(std::vector<char> _vec);
+    // 输出二叉树
+    void PrintBTree_int();
+};
+
+// 输出二叉树
+template<class T>
+void HuffmanCoding<T>::PrintBTree_int() {
+    this->printString(this->top);
+}
+
+template<class T>
+HuffmanCoding<T>::HuffmanCoding(std::vector<char> _vec){
         this->vec = _vec;
         // 建立b用于临时保存
         std::vector<BitNode<char>*> b;
         // 和vec建立关系
         for(int i = 0; i < vec.size(); i++){
             b.push_back(new BitNode<char>(vec[i]));
-           b[i]->setLchild(nullptr);
-           b[i]->setRchild(nullptr);
+            b[i]->setLchild(nullptr);
+            b[i]->setRchild(nullptr);
         }
         this->top=b[0];
 
@@ -65,17 +79,38 @@ public:
                 }
             }
             // 开始建立新树，其中k1为第一小，k2为第二小
-            auto* tmp = new BitNode<char>(b[k1]->getData() + b[k2]->getData());
-            tmp->setRchild(b[0]);
-            tmp->setLchild(b[1]);
+            this->top = new BitNode<char>(b[k1]->getData() + b[k2]->getData());
+            this->top->setRchild(b[0]);
+            this->top->setLchild(b[1]);
 
             // 对于容器内进行清空操作
-            b[k1] = tmp;
+            b[k1] = this->top;
             b[k2] = nullptr;
         }
+}
+
+// 输出二叉树
+template<class T>
+void HuffmanCoding<T>::printString(BitNode<T> *bitNode) {
+    if (bitNode != NULL)
+    {
+        this->result += (int)(bitNode->getData());
+        if (bitNode->getRchild() != NULL || bitNode->getLchild() != NULL)
+        {
+            this->result += "(";
+            if (bitNode->getLchild() != NULL)
+            {
+                printString(bitNode->getLchild()); //输出左子树
+            }
+            if (bitNode->getRchild() != NULL)
+            {
+                this->result += ",";
+                printString(bitNode->getRchild()); //输出右子树
+            }
+            this->result += ")";
+        }
     }
-    
-};
+}
 
 
 #endif //UNTITLED4_HUFFMANCODING_H

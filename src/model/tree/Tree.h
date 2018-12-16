@@ -25,8 +25,6 @@ class Tree {
 private:
     // 树的深度
     int depth = 0;
-    // 树的头节点
-    BitNode<char>* bitNodeTop = nullptr;
     // 创建树时输入值
     std::string createString = "";
     void recursion(BitNode<char>* tree); // 输出方法
@@ -38,6 +36,7 @@ private:
     int get(BitNode<char>* tree);
     int count(BitNode<char>* tree);
 public:
+    BitNode<char>* bitNodeTop = nullptr;
     // 获取树中叶子节点数量
     int CountLeaf();
     // 获取二叉树深度

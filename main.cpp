@@ -44,6 +44,9 @@ int main() {
     vecH.push_back(20);
     vecH.push_back(16);
     auto Huffman = new HuffmanCoding<char>(vecH);
-    vec.push_back(Huffman->top->getData());
-    std::cout << (int)Huffman->top->getData() << std::endl;
+//    vec.push_back(Huffman->top->getData());
+ //   std::cout << (int)Huffman->top->getData() << std::endl;
+    Huffman->PrintBTree_int();
+    std::cout << Huffman->result << std::endl;
+   // std::cout << Huffman<< std::endl;
 }
